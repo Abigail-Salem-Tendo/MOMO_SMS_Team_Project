@@ -13,7 +13,11 @@ The goal is to demonstrate enterprise-level fullstack development skills, includ
 - Maxime Lilian Hirwa
 
 ## System Architecture
+
+- the diagram below shows how raw MoMo SMS XML data is processed through multiple ETL stages, stored in a relational database, and visualized through a web-based dashboard.
+
 Architecture diagram: https://drive.google.com/file/d/1vIbDJC-reycJXF7FDjH24iFLt8KMcxBq/view?usp=sharing
+
 
 ## Scrum Board
 Project board: https://trello.com/b/A1phIJrH/devstrike
