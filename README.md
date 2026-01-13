@@ -13,7 +13,7 @@ The goal is to demonstrate enterprise-level fullstack development skills, includ
 - Maxime Lilian Hirwa
 
 ## System Architecture
-Architecture diagram: [LINK HERE]
+Architecture diagram: https://drive.google.com/file/d/1vIbDJC-reycJXF7FDjH24iFLt8KMcxBq/view?usp=sharing
 
 ## Scrum Board
 Project board: https://trello.com/b/A1phIJrH/devstrike
