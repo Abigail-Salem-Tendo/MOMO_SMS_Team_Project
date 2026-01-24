@@ -1,7 +1,40 @@
 {
-  "transaction_id": "",
-  "transaction_date": "",
-  "amount": 100,
-  "status":"",
-  "raw_message": ""
+  "entities": {
+    "users": {
+      "user_id": 1,
+      "name": "Abigail Salem",
+      "phone_number": "250XXXXXXXXX"
+    },
+    "transaction_categories": {
+      "category_id": 1,
+      "category_name": "transfer"
+    },
+    "system_logs": {
+      "log_id": 1,
+      "transaction": 1,
+      "log_time": "datetime",
+      "message": "Momo transfer"
+    },
+    "transactions": {
+      "transaction_id": "transaction_date",
+      "amount": 10000,
+      "category_id": 1,
+      "status": "completed",
+      "raw_message": "actual message attached to the transaction"
+    },
+    "user_transactions": {
+      "user_transaction_id": 1,
+      "transaction_id": 1,
+      "user_id": 1,
+      "role": "sender",
+      "balance_after": 100
+    }
+  },
+  "complex_transaction_example": {
+    "transaction_id": "",
+    "transaction_date": "",
+    "amount": 100,
+    "status":"",
+    "raw_message": ""
+  }
 }
