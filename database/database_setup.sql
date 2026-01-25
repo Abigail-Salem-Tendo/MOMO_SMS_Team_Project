@@ -32,8 +32,7 @@ CREATE TABLE user_transactions (
 
 ALTER TABLE users 
     MODIFY name VARCHAR(150) NOT NULL COMMENT 'Full name of the user',
-    MODIFY phone_number VARCHAR(15) NOT NULL COMMENT 'Unique phone handle',
-    ADD INDEX idx_phone (phone_number);
+    MODIFY phone_number VARCHAR(15) NOT NULL COMMENT 'Unique phone handle';
 
 
 ALTER TABLE transactions 
@@ -56,3 +55,22 @@ CREATE TABLE IF NOT EXISTS transaction_categories (
 -- linking to transactions
 ALTER TABLE transactions 
     ADD FOREIGN KEY (category_id) REFERENCES transaction_categories(category_id);
+
+CREATE TABLE IF NOT EXISTS system_logs (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    transaction_id INT COMMENT 'Links log to a specific transaction event',
+    log_level ENUM('INFO', 'WARNING', 'ERROR') DEFAULT 'INFO' COMMENT 'Severity of the log entry',
+    status VARCHAR(50) DEFAULT 'PROCESSING' COMMENT 'Current state of the transaction',
+    message TEXT COMMENT 'Detailed system message or error trace',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    -- Referential Integrity
+
+    FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id) ON DELETE SET NULL,
+
+    -- Appropriate Indexes
+    -- 
+    INDEX idx_log_level (log_level),
+    -- Indexing created_at helps find "logs from the last hour"
+    INDEX idx_log_time (created_at)
+);
