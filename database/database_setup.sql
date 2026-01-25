@@ -88,6 +88,13 @@ INSERT IGNORE INTO transaction_categories (category_id, category_name) VALUES
 (3, 'MERCHANT_PAY'), 
 (4, 'WITHDRAWAL'), 
 (5, 'BILL_PAY');
+INSERT IGNORE INTO users (user_id, name, phone_number, entity_type) VALUES 
+(1, 'My Device', '0788000000', 'SELF'),
+(2, 'KAREKEZI JEAN', '0788123456', 'INDIVIDUAL'),
+(3, 'MUGISHA ALINE', '0788654321', 'INDIVIDUAL'),
+(4, 'RWARUTABURA', '0788987654', 'MERCHANT'),
+(5, 'CANAL+ RWANDA', '0788555555', 'MERCHANT'),
+(6, 'MUVUNYI AGENT', '0788111222', 'AGENT');
 
 INSERT IGNORE INTO user_transactions (transaction_id, user_id, role, balance_after) VALUES
 -- Tx 1: Karekezi sent to You
