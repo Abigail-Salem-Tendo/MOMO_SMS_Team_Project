@@ -34,6 +34,11 @@ ALTER TABLE users
     MODIFY name VARCHAR(150) NOT NULL COMMENT 'Full name of the user',
     MODIFY phone_number VARCHAR(15) NOT NULL COMMENT 'Unique phone handle';
 
+ALTER TABLE users 
+ADD COLUMN entity_type ENUM('SELF', 'INDIVIDUAL', 'MERCHANT', 'AGENT') 
+DEFAULT 'INDIVIDUAL' 
+COMMENT 'Type of user: Self, Person, Business, or Agent'
+AFTER phone_number;
 
 ALTER TABLE transactions 
     MODIFY transaction_date DATETIME NOT NULL COMMENT 'Date extracted from SMS',
@@ -66,6 +71,13 @@ CREATE TABLE IF NOT EXISTS system_logs (
     INDEX idx_log_time (created_at)
 );
 
+INSERT IGNORE INTO users (user_id, name, phone_number, entity_type) VALUES 
+(1, 'My Device', '0788000000', 'SELF'),
+(2, 'KAREKEZI JEAN', '0788123456', 'INDIVIDUAL'),
+(3, 'MUGISHA ALINE', '0788654321', 'INDIVIDUAL'),
+(4, 'RWARUTABURA', '0788987654', 'MERCHANT'),
+(5, 'CANAL+ RWANDA', '0788555555', 'MERCHANT'),
+(6, 'MUVUNYI AGENT', '0788111222', 'AGENT');
 
 
 
@@ -93,4 +105,6 @@ INSERT IGNORE INTO user_transactions (transaction_id, user_id, role, balance_aft
 -- Tx 5: You withdrew cash (Sender) from Agent (Receiver)
 (5, 1, 'SENDER', 0.00),
 (5, 6, 'RECEIVER', NULL);
+
+
 
