@@ -22,7 +22,7 @@ CREATE TABLE user_transactions (
     transaction_id INT,
     user_id INT,
     role text NOT NULL,
-    balance_after INT
+    balance_after INT,
 
     FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
@@ -43,4 +43,8 @@ ALTER TABLE transactions
     ADD CONSTRAINT chk_amount_positive CHECK (amount > 0),
     ADD INDEX idx_tx_date (transaction_date);
 
+
+ALTER TABLE user_transactions 
+    MODIFY role ENUM('SENDER', 'RECEIVER') NOT NULL COMMENT 'Role: SENDER or RECEIVER',
+    MODIFY balance_after DECIMAL(15, 2) COMMENT 'Balance snapshot after event';
 
