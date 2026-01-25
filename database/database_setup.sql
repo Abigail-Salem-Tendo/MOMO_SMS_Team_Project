@@ -15,7 +15,17 @@ CREATE TABLE transactions (
     raw_message TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
+);
 
-);  
+CREATE TABLE user_transactions (
+    user_transaction_id INT AUTO_INCREMENT PRIMARY KEY,
+    transaction_id INT,
+    user_id INT,
+    role text NOT NULL,
+    balance_after INT
+
+    FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
 
 
