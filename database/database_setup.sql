@@ -45,6 +45,9 @@ ALTER TABLE transactions
     MODIFY amount DECIMAL(15, 2) NOT NULL COMMENT 'Transaction amount in RWF',
     MODIFY fees DECIMAL(10, 2) DEFAULT 0.00 COMMENT 'Service fees charged';
 
+ALTER TABLE transactions 
+ADD COLUMN external_ref_id VARCHAR(50) UNIQUE NOT NULL COMMENT 'Unique MoMo Transaction ID' 
+AFTER transaction_id;
 
 ALTER TABLE user_transactions 
     MODIFY role ENUM('SENDER', 'RECEIVER') NOT NULL COMMENT 'Role: SENDER or RECEIVER',
@@ -95,6 +98,13 @@ INSERT IGNORE INTO users (user_id, name, phone_number, entity_type) VALUES
 (4, 'RWARUTABURA', '0788987654', 'MERCHANT'),
 (5, 'CANAL+ RWANDA', '0788555555', 'MERCHANT'),
 (6, 'MUVUNYI AGENT', '0788111222', 'AGENT');
+
+INSERT IGNORE INTO transactions (transaction_id, external_ref_id, transaction_date, amount, fees, category_id, raw_message) VALUES
+(1, 'TX_001', NOW() - INTERVAL 5 DAY, 5000.00, 0.00, 1, 'Received 5000 from KAREKEZI'),
+(2, 'TX_002', NOW() - INTERVAL 4 DAY, 2000.00, 50.00, 2, 'Payment to RWARUTABURA'),
+(3, 'TX_003', NOW() - INTERVAL 3 DAY, 15000.00, 0.00, 1, 'Received 15000 from MUGISHA'),
+(4, 'TX_004', NOW() - INTERVAL 2 DAY, 10000.00, 200.00, 5, 'Payment to CANAL+'),
+(5, 'TX_005', NOW() - INTERVAL 1 DAY, 50000.00, 1000.00, 4, 'Withdrawal at MUVUNYI AGENT');
 
 INSERT IGNORE INTO user_transactions (transaction_id, user_id, role, balance_after) VALUES
 -- Tx 1: Karekezi sent to You
