@@ -1,7 +1,7 @@
 {
   "entities": {
     "users": {
-      "user_id": 1,
+      "user_id": 2,
       "name": "KAREKAZI JEAN",
       "phone_number": "0788123456",
       "entity_type": "INDIVIDUAL"
@@ -32,7 +32,7 @@
     "user_transactions": {
       "user_transaction_id": 1,
       "transaction_id": 1,
-      "user_id": 1,
+      "user_id": 2,
       "role": "RECEIVER",
       "balance_after": 45000.00
     }
