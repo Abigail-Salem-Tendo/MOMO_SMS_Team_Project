@@ -29,10 +29,18 @@ CREATE TABLE user_transactions (
 );
 
 
--- Fix Users Table
+
 ALTER TABLE users 
     MODIFY name VARCHAR(150) NOT NULL COMMENT 'Full name of the user',
     MODIFY phone_number VARCHAR(15) NOT NULL COMMENT 'Unique phone handle',
     ADD INDEX idx_phone (phone_number);
+
+
+ALTER TABLE transactions 
+    MODIFY transaction_date DATETIME NOT NULL COMMENT 'Date extracted from SMS',
+    MODIFY amount DECIMAL(15, 2) NOT NULL COMMENT 'Transaction amount in RWF',
+    MODIFY fees DECIMAL(10, 2) DEFAULT 0.00 COMMENT 'Service fees charged',
+    ADD CONSTRAINT chk_amount_positive CHECK (amount > 0),
+    ADD INDEX idx_tx_date (transaction_date);
 
 
