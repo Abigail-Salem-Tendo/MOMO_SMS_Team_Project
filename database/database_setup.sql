@@ -48,3 +48,11 @@ ALTER TABLE user_transactions
     MODIFY role ENUM('SENDER', 'RECEIVER') NOT NULL COMMENT 'Role: SENDER or RECEIVER',
     MODIFY balance_after DECIMAL(15, 2) COMMENT 'Balance snapshot after event';
 
+CREATE TABLE IF NOT EXISTS transaction_categories (
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(50) UNIQUE NOT NULL COMMENT 'e.g., P2P, MERCHANT, BILLS'
+);
+
+-- linking to transactions
+ALTER TABLE transactions 
+    ADD FOREIGN KEY (category_id) REFERENCES transaction_categories(category_id);
