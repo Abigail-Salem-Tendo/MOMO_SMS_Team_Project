@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS system_logs (
 
 
 
--- Sample Data to test our database
+-- Sample Data to test our database. Most of this data is from the .xml file given to us to help us design the DB.
 INSERT IGNORE INTO transaction_categories (category_id, category_name) VALUES 
 (1, 'P2P_RECEIVE'), 
 (2, 'P2P_SEND'), 
@@ -77,5 +77,20 @@ INSERT IGNORE INTO transaction_categories (category_id, category_name) VALUES
 (4, 'WITHDRAWAL'), 
 (5, 'BILL_PAY');
 
-
+INSERT IGNORE INTO user_transactions (transaction_id, user_id, role, balance_after) VALUES
+-- Tx 1: Karekezi sent to You
+(1, 2, 'SENDER', NULL),
+(1, 1, 'RECEIVER', 45000.00),
+-- Tx 2: You paid Rwarutabura
+(2, 1, 'SENDER', 42950.00),
+(2, 4, 'RECEIVER', NULL),
+-- Tx 3: Mugisha sent to You
+(3, 3, 'SENDER', NULL),
+(3, 1, 'RECEIVER', 57950.00),
+-- Tx 4: You paid Canal+
+(4, 1, 'SENDER', 47750.00),
+(4, 5, 'RECEIVER', NULL),
+-- Tx 5: You withdrew cash (Sender) from Agent (Receiver)
+(5, 1, 'SENDER', 0.00),
+(5, 6, 'RECEIVER', NULL);
 
