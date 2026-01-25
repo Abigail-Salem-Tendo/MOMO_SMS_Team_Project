@@ -61,14 +61,7 @@ CREATE TABLE IF NOT EXISTS system_logs (
     status VARCHAR(50) DEFAULT 'PROCESSING' COMMENT 'Current state of the transaction',
     message TEXT COMMENT 'Detailed system message or error trace',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    -- Referential Integrity
-
     FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id) ON DELETE SET NULL,
-
-    -- Appropriate Indexes
-    -- 
     INDEX idx_log_level (log_level),
-    -- Indexing created_at helps find "logs from the last hour"
     INDEX idx_log_time (created_at)
 );
