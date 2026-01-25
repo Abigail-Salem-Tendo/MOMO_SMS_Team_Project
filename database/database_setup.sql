@@ -65,3 +65,17 @@ CREATE TABLE IF NOT EXISTS system_logs (
     INDEX idx_log_level (log_level),
     INDEX idx_log_time (created_at)
 );
+
+
+
+
+-- Sample Data to test our database
+INSERT IGNORE INTO transaction_categories (category_id, category_name) VALUES 
+(1, 'P2P_RECEIVE'), 
+(2, 'P2P_SEND'), 
+(3, 'MERCHANT_PAY'), 
+(4, 'WITHDRAWAL'), 
+(5, 'BILL_PAY');
+
+
+
