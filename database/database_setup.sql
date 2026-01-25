@@ -29,3 +29,10 @@ CREATE TABLE user_transactions (
 );
 
 
+-- Fix Users Table
+ALTER TABLE users 
+    MODIFY name VARCHAR(150) NOT NULL COMMENT 'Full name of the user',
+    MODIFY phone_number VARCHAR(15) NOT NULL COMMENT 'Unique phone handle',
+    ADD INDEX idx_phone (phone_number);
+
+
