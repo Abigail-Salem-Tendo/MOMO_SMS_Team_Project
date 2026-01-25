@@ -38,9 +38,7 @@ ALTER TABLE users
 ALTER TABLE transactions 
     MODIFY transaction_date DATETIME NOT NULL COMMENT 'Date extracted from SMS',
     MODIFY amount DECIMAL(15, 2) NOT NULL COMMENT 'Transaction amount in RWF',
-    MODIFY fees DECIMAL(10, 2) DEFAULT 0.00 COMMENT 'Service fees charged',
-    ADD CONSTRAINT chk_amount_positive CHECK (amount > 0),
-    ADD INDEX idx_tx_date (transaction_date);
+    MODIFY fees DECIMAL(10, 2) DEFAULT 0.00 COMMENT 'Service fees charged';
 
 
 ALTER TABLE user_transactions 
