@@ -1,19 +1,21 @@
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
-    full_name VARCHAR(150) NOT NULL,
+    name VARCHAR(150) NOT NULL,
     phone_number VARCHAR(15) UNIQUE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE transaction (
+CREATE TABLE transactions (
     transaction_id INT AUTO_INCREMENT PRIMARY KEY,
-    sender_id INT NOT NULL,
-    receiver_id INT NOT NULL,
-    amount DECIMAL(10, 2) NOT NULL,
     transaction_date DATETIME NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    amount INT NOT NULL,
+    fees INT,
+    category_id INT,
+    status VARCHAR(50) NOT NULL,
+    raw_message TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
-    FOREIGN KEY (sender_id) REFERENCES users(user_id),
-    FOREIGN KEY (receiver_id) REFERENCES users(user_id)
 
 );  
+
+
