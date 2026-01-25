@@ -123,5 +123,12 @@ INSERT IGNORE INTO user_transactions (transaction_id, user_id, role, balance_aft
 (5, 1, 'SENDER', 0.00),
 (5, 6, 'RECEIVER', NULL);
 
+INSERT INTO system_logs (transaction_id, log_level, status, message) VALUES
+(1, 'INFO', 'COMPLETED', 'Transaction parsed successfully from SMS.'),
+(2, 'INFO', 'COMPLETED', 'Fee calculation verified.'),
+(3, 'INFO', 'COMPLETED', 'Balance update synchronized.'),
+(4, 'WARNING', 'FLAGGED', 'High frequency transaction detected.'),
+(5, 'INFO', 'COMPLETED', 'Cash withdrawal agent verified.');
+
 
 
