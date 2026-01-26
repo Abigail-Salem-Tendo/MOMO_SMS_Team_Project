@@ -76,39 +76,6 @@ CREATE TABLE IF NOT EXISTS system_logs (
     INDEX idx_log_time (created_at)
 );
 
--- Indexes
-CREATE INDEX idx_phone_number ON users(phone_number);
-CREATE INDEX idx_transaction_date ON transactions(transaction_date);
-CREATE INDEX idx_user_transaction ON user_transactions(user_id, transaction_id);
-
--- Registering unique participants
-insert into users (user_id, name, phone_number, entity_type) values 
-(1, 'Main User', '36521838', 'SELF'),          
-(2, 'Samuel Carter', '250791666666', 'INDIVIDUAL'),  		
-(3, 'MTN Bank System', '250795963036', 'MERCHANT'),  		
-(4, 'Alex Doe', '43810', 'MERCHANT'),             		
-(5, 'Agent Sophia', '250790777777', 'AGENT'), 
-(6, 'Linda Green', '*********806', 'INDIVIDUAL'),   
-(7, 'Bundles and Packs', 'Bundles&Packs', 'MERCHANT');
-
-
--- Define the types of transactions 
-insert into transaction_categories (category_id, category_name) values 
-(1, 'P2P'),           -- Peer-to-Peer (Transfer/Receive)
-(2, 'DEPOSIT'),       -- Bank deposit
-(3, 'MERCHANT'),      -- Payment to a merchant code
-(4, 'WITHDRAW'),      -- Agent withdrawal
-(5, 'BILLS');         -- Service payments (Bundles,Electricity,...)
-
-
--- Records of 6 sample transactions (5 Completed, 1 Failed)
-insert into transactions (transaction_id, transaction_date, amount, fees, category_id, status, raw_message) values
-(1, '2024-05-11 20:34:47', 10000.00, 100.00, 1, 'COMPLETED', '*165*S*10000 RWF transferred to Samuel Carter (250791666666) from 36521838 at 2024-05-11 20:34:47 . Fee was: 100 RWF. New balance: 28300 RWF. Kugura ama inite cg interineti kuri MoMo, Kanda *182*2*1# .*EN#'),
-(2, '2024-05-11 18:43:49', 40000.00, 0.00, 2, 'COMPLETED', '*113*R*A bank deposit of 40000 RWF has been added to your mobile money account at 2024-05-11 18:43:49. Your NEW BALANCE :40400 RWF. Cash Deposit::CASH::::0::250795963036.Thank you for using MTN MobileMoney.*EN#'),
-(3, '2024-05-12 13:34:25', 3500.00, 0.00, 3, 'COMPLETED', 'TxId: 82113964658. Your payment of 3,500 RWF to Alex Doe 43810 has been completed at 2024-05-12 13:34:25. Your new balance: 10,880 RWF. Fee was 0 RWF.'),
-(4, '2024-05-26 02:10:27', 20000.00, 350.00, 4, 'COMPLETED', 'You Abebe Chala CHEBUDIE (*********036) have via agent: Agent Sophia (250790777777), withdrawn 20000 RWF from your mobile money account: 36521838 at 2024-05-26 02:10:27 and you can now collect your money in cash. Your new balance: 6400 RWF. Fee paid: 350 RWF. Message from agent: 1. Financial Transaction Id: 14098463509.'),
-(5, '2024-06-18 14:08:05', 5000.00, 0.00, 1, 'COMPLETED', 'You have received 5000 RWF from Linda Green (*********806) on your mobile money account at 2024-06-18 14:08:05. Message from sender: . Your new balance:14110 RWF. Financial Transaction Id: 43960900475.'),
-(6, '2024-11-12 23:47:47', 5000.00, 0.00, 5, 'FAILED', '*143*TxId:16803066185*S*Your payment of 5000 RWF to Bundles and Packs with token has failed at 2024-11-12 23:47:47. Message: - -. *EN#');
 
 -- User roles in transactions and balances after each transaction
 insert into user_transactions (transaction_id, user_id, role, balance_after) values
