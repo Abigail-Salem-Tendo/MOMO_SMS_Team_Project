@@ -1,33 +1,35 @@
 CREATE TABLE users (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(150) NOT NULL,
-    phone_number VARCHAR(15) UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    user_id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'unique id for each user',
+    name VARCHAR(150) NOT NULL COMMENT 'the name of the user',
+    phone_number VARCHAR(15) UNIQUE NOT NULL COMMENT 'unique phone handle',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time'
+
 );
 
 CREATE TABLE transactions (
-    transaction_id INT AUTO_INCREMENT PRIMARY KEY,
-    transaction_date DATETIME NOT NULL,
-    amount INT NOT NULL,
-    fees INT,
-    category_id INT,
-    status VARCHAR(50) NOT NULL,
-    raw_message TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    transaction_id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Unique transaction id',
+    transaction_date DATETIME NOT NULL COMMENT 'Date extracted from SMS',
+    amount DECIMAL(15,2) NOT NULL COMMENT 'Transaction amount in Rwandan francs',
+    fees DECIMAL(10,2) DEFAULT 0.00 COMMENT 'Fees charged',
+    category_id INT COMMENT 'transaction category',
+    status VARCHAR(50) NOT NULL COMMENT 'transaction status',
+    raw_message TEXT COMMENT 'original sms message',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'creation time',
+
+    FOREIGN KEY (category_id) REFERENCES transaction_categories(category_id)
 
 );
 
 CREATE TABLE user_transactions (
-    user_transaction_id INT AUTO_INCREMENT PRIMARY KEY,
-    transaction_id INT,
-    user_id INT,
-    role text NOT NULL,
-    balance_after INT,
+    user_transaction_id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Primary key for the user_transactions table',
+    transaction_id INT NOT NULL COMMENT 'linked transaction',
+    user_id INT NOT NULL COMMENT 'linked user',
+    role ENUM('SENDER', 'RECEIVER') NOT NULL COMMENT 'role of the user in transaction',
+    balance_after DECIMAL(15,2) COMMENt 'balance of the user after transaction',
 
     FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
-
 
 
 ALTER TABLE users 
