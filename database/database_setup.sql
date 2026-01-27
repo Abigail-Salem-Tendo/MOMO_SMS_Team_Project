@@ -120,12 +120,12 @@ insert into user_transactions (transaction_id, user_id, role, balance_after) val
 -- Transaction 6: Failed payment (Balances are NULL as money did not move)
 (6, 1, 'SENDER', NULL), (6, 7, 'RECEIVER', NULL);
 
-INSERT INTO system_logs (transaction_id, log_level, status, message) VALUES
-(1, 'INFO', 'COMPLETED', 'Transaction parsed successfully from SMS.'),
-(2, 'INFO', 'COMPLETED', 'Fee calculation verified.'),
-(3, 'INFO', 'COMPLETED', 'Balance update synchronized.'),
-(4, 'WARNING', 'FLAGGED', 'High frequency transaction detected.'),
-(5, 'INFO', 'COMPLETED', 'Cash withdrawal agent verified.');
 
-
-
+-- Sample system logs for transactions
+insert into system_logs (transaction_id, log_level, status, message) values
+(1, 'INFO', 'COMPLETED', 'Transfer of 10000 RWF to Samuel Carter.'),
+(2, 'INFO', 'COMPLETED', 'Bank deposit of 40000 RWF added.'),
+(3, 'INFO', 'COMPLETED', 'Payment of 3500 RWF to Alex Doe.'),
+(4, 'INFO', 'COMPLETED', 'Withdrawal of 20000 RWF via Agent Sophia.'),
+(5, 'INFO', 'COMPLETED', 'Received 5000 RWF from Linda Green.'),
+(6, 'ERROR', 'FAILED', 'Payment of 5000 RWF to Bundles and Packs failed.');
