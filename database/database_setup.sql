@@ -105,22 +105,20 @@ insert into transactions (transaction_id, transaction_date, amount, fees, catego
 (5, '2024-06-18 14:08:05', 5000.00, 0.00, 1, 'COMPLETED', 'You have received 5000 RWF from Linda Green (*********806) on your mobile money account at 2024-06-18 14:08:05. Message from sender: . Your new balance:14110 RWF. Financial Transaction Id: 43960900475.'),
 (6, '2024-11-12 23:47:47', 5000.00, 0.00, 5, 'FAILED', '*143*TxId:16803066185*S*Your payment of 5000 RWF to Bundles and Packs with token has failed at 2024-11-12 23:47:47. Message: - -. *EN#');
 
-INSERT IGNORE INTO user_transactions (transaction_id, user_id, role, balance_after) VALUES
--- Tx 1: Karekezi sent to You
-(1, 2, 'SENDER', NULL),
-(1, 1, 'RECEIVER', 45000.00),
--- Tx 2: You paid Rwarutabura
-(2, 1, 'SENDER', 42950.00),
-(2, 4, 'RECEIVER', NULL),
--- Tx 3: Mugisha sent to You
-(3, 3, 'SENDER', NULL),
-(3, 1, 'RECEIVER', 57950.00),
--- Tx 4: You paid Canal+
-(4, 1, 'SENDER', 47750.00),
-(4, 5, 'RECEIVER', NULL),
--- Tx 5: You withdrew cash (Sender) from Agent (Receiver)
-(5, 1, 'SENDER', 0.00),
-(5, 6, 'RECEIVER', NULL);
+-- User roles in transactions and balances after each transaction
+insert into user_transactions (transaction_id, user_id, role, balance_after) values
+-- Transaction 1: Main User sends to Samuel Carter
+(1, 1, 'SENDER', 28300.00), (1, 2, 'RECEIVER', NULL),
+-- Transaction 2: Bank sends deposit to Main User
+(2, 3, 'SENDER', NULL), (2, 1, 'RECEIVER', 40400.00),
+-- Transaction 3: Main User pays Alex Doe
+(3, 1, 'SENDER', 10880.00), (3, 4, 'RECEIVER', NULL),
+-- Transaction 4: Main User withdraws via Agent Sophia
+(4, 1, 'SENDER', 6400.00), (4, 5, 'RECEIVER', NULL),
+-- Transaction 5: Linda Green sends to Main User
+(5, 6, 'SENDER', NULL), (5, 1, 'RECEIVER', 14110.00),
+-- Transaction 6: Failed payment (Balances are NULL as money did not move)
+(6, 1, 'SENDER', NULL), (6, 7, 'RECEIVER', NULL);
 
 INSERT INTO system_logs (transaction_id, log_level, status, message) VALUES
 (1, 'INFO', 'COMPLETED', 'Transaction parsed successfully from SMS.'),
