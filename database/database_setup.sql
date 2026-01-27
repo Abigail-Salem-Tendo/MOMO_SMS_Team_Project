@@ -87,21 +87,14 @@ insert into users (user_id, name, phone_number, entity_type) values
 (7, 'Bundles and Packs', 'Bundles and Packs', 'MERCHANT');
 
 
+-- Define the types of transactions 
+insert into transaction_categories (category_id, category_name) values 
+(1, 'P2P'),           -- Peer-to-Peer (Transfer/Receive)
+(2, 'DEPOSIT'),       -- Bank deposit
+(3, 'MERCHANT'),      -- Payment to a merchant code
+(4, 'WITHDRAW'),      -- Agent withdrawal
+(5, 'BILLS');         -- Service payments (Bundles,Electricity,...)
 
--- Sample Data to test our database. Most of this data is from the .xml file given to us to help us design the DB.
-INSERT IGNORE INTO transaction_categories (category_id, category_name) VALUES 
-(1, 'P2P_RECEIVE'), 
-(2, 'P2P_SEND'), 
-(3, 'MERCHANT_PAY'), 
-(4, 'WITHDRAWAL'), 
-(5, 'BILL_PAY');
-INSERT IGNORE INTO users (user_id, name, phone_number, entity_type) VALUES 
-(1, 'My Device', '0788000000', 'SELF'),
-(2, 'KAREKEZI JEAN', '0788123456', 'INDIVIDUAL'),
-(3, 'MUGISHA ALINE', '0788654321', 'INDIVIDUAL'),
-(4, 'RWARUTABURA', '0788987654', 'MERCHANT'),
-(5, 'CANAL+ RWANDA', '0788555555', 'MERCHANT'),
-(6, 'MUVUNYI AGENT', '0788111222', 'AGENT');
 
 INSERT IGNORE INTO transactions (transaction_id, external_ref_id, transaction_date, amount, fees, category_id, raw_message) VALUES
 (1, 'TX_001', NOW() - INTERVAL 5 DAY, 5000.00, 0.00, 1, 'Received 5000 from KAREKEZI'),
