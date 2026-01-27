@@ -76,13 +76,15 @@ CREATE TABLE IF NOT EXISTS system_logs (
     INDEX idx_log_time (created_at)
 );
 
-INSERT IGNORE INTO users (user_id, name, phone_number, entity_type) VALUES 
-(1, 'My Device', '0788000000', 'SELF'),
-(2, 'KAREKEZI JEAN', '0788123456', 'INDIVIDUAL'),
-(3, 'MUGISHA ALINE', '0788654321', 'INDIVIDUAL'),
-(4, 'RWARUTABURA', '0788987654', 'MERCHANT'),
-(5, 'CANAL+ RWANDA', '0788555555', 'MERCHANT'),
-(6, 'MUVUNYI AGENT', '0788111222', 'AGENT');
+-- Registering unique participants
+insert into users (user_id, name, phone_number, entity_type) values 
+(1, 'Main User', '36521838', 'SELF'),          
+(2, 'Samuel Carter', '250791666666', 'INDIVIDUAL'),  		
+(3, 'MTN Bank System', '250795963036', 'MERCHANT'),  		
+(4, 'Alex Doe', '43810', 'MERCHANT'),             		
+(5, 'Agent Sophia', '250790777777', 'AGENT'), 
+(6, 'Linda Green', '*********806', 'INDIVIDUAL'),   
+(7, 'Bundles and Packs', 'Bundles and Packs', 'MERCHANT');
 
 
 
