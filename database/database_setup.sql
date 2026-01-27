@@ -96,12 +96,14 @@ insert into transaction_categories (category_id, category_name) values
 (5, 'BILLS');         -- Service payments (Bundles,Electricity,...)
 
 
-INSERT IGNORE INTO transactions (transaction_id, external_ref_id, transaction_date, amount, fees, category_id, raw_message) VALUES
-(1, 'TX_001', NOW() - INTERVAL 5 DAY, 5000.00, 0.00, 1, 'Received 5000 from KAREKEZI'),
-(2, 'TX_002', NOW() - INTERVAL 4 DAY, 2000.00, 50.00, 2, 'Payment to RWARUTABURA'),
-(3, 'TX_003', NOW() - INTERVAL 3 DAY, 15000.00, 0.00, 1, 'Received 15000 from MUGISHA'),
-(4, 'TX_004', NOW() - INTERVAL 2 DAY, 10000.00, 200.00, 5, 'Payment to CANAL+'),
-(5, 'TX_005', NOW() - INTERVAL 1 DAY, 50000.00, 1000.00, 4, 'Withdrawal at MUVUNYI AGENT');
+-- Records of 6 sample transactions (5 Completed, 1 Failed)
+insert into transactions (transaction_id, transaction_date, amount, fees, category_id, status, raw_message) values
+(1, '2024-05-11 20:34:47', 10000.00, 100.00, 1, 'COMPLETED', '*165*S*10000 RWF transferred to Samuel Carter (250791666666) from 36521838 at 2024-05-11 20:34:47 . Fee was: 100 RWF. New balance: 28300 RWF. Kugura ama inite cg interineti kuri MoMo, Kanda *182*2*1# .*EN#'),
+(2, '2024-05-11 18:43:49', 40000.00, 0.00, 2, 'COMPLETED', '*113*R*A bank deposit of 40000 RWF has been added to your mobile money account at 2024-05-11 18:43:49. Your NEW BALANCE :40400 RWF. Cash Deposit::CASH::::0::250795963036.Thank you for using MTN MobileMoney.*EN#'),
+(3, '2024-05-12 13:34:25', 3500.00, 0.00, 3, 'COMPLETED', 'TxId: 82113964658. Your payment of 3,500 RWF to Alex Doe 43810 has been completed at 2024-05-12 13:34:25. Your new balance: 10,880 RWF. Fee was 0 RWF.'),
+(4, '2024-05-26 02:10:27', 20000.00, 350.00, 4, 'COMPLETED', 'You Abebe Chala CHEBUDIE (*********036) have via agent: Agent Sophia (250790777777), withdrawn 20000 RWF from your mobile money account: 36521838 at 2024-05-26 02:10:27 and you can now collect your money in cash. Your new balance: 6400 RWF. Fee paid: 350 RWF. Message from agent: 1. Financial Transaction Id: 14098463509.'),
+(5, '2024-06-18 14:08:05', 5000.00, 0.00, 1, 'COMPLETED', 'You have received 5000 RWF from Linda Green (*********806) on your mobile money account at 2024-06-18 14:08:05. Message from sender: . Your new balance:14110 RWF. Financial Transaction Id: 43960900475.'),
+(6, '2024-11-12 23:47:47', 5000.00, 0.00, 5, 'FAILED', '*143*TxId:16803066185*S*Your payment of 5000 RWF to Bundles and Packs with token has failed at 2024-11-12 23:47:47. Message: - -. *EN#');
 
 INSERT IGNORE INTO user_transactions (transaction_id, user_id, role, balance_after) VALUES
 -- Tx 1: Karekezi sent to You
