@@ -134,3 +134,11 @@ insert into system_logs (transaction_id, log_level, status, message) values
 (4, 'INFO', 'COMPLETED', 'Withdrawal of 20000 RWF via Agent Sophia.'),
 (5, 'INFO', 'COMPLETED', 'Received 5000 RWF from Linda Green.'),
 (6, 'ERROR', 'FAILED', 'Payment of 5000 RWF to Bundles and Packs failed.');
+
+-- Validation queries
+SELECT phone_number, COUNT(*) FROM users GROUP BY phone_number HAVING COUNT(*) > 1;
+SELECT * FROM transactions WHERE category_id IS NULL;
+SELECT * FROM user_transactions ut
+LEFT JOIN transactions t ON ut.transaction_id=t.transaction_id
+LEFT JOIN users u ON ut.user_id=u.user_id
+WHERE t.transaction_id IS NULL OR u.user_id IS NULL;
