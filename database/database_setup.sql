@@ -6,8 +6,8 @@ CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'unique id for each user',
     name VARCHAR(150) NOT NULL COMMENT 'the name of the user',
     phone_number VARCHAR(15) UNIQUE NOT NULL COMMENT 'unique phone handle',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time'
-
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time',
+    INDEX idx_phone_number (phone_number)
 ); 
 
 CREATE TABLE IF NOT EXISTS transaction_categories (
@@ -25,7 +25,8 @@ CREATE TABLE transactions (
     raw_message TEXT COMMENT 'original sms message',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'creation time',
 
-    FOREIGN KEY (category_id) REFERENCES transaction_categories(category_id)
+    FOREIGN KEY (category_id) REFERENCES transaction_categories(category_id),
+    INDEX idx_transaction_date (transaction_date)
 
 );
 
