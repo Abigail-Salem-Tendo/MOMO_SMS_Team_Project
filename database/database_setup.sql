@@ -1,11 +1,10 @@
-USE  momo_db;
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'unique id for each user',
     name VARCHAR(150) NOT NULL COMMENT 'the name of the user',
     phone_number VARCHAR(15) UNIQUE NOT NULL COMMENT 'unique phone handle',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time'
 
-);
+); 
 
 CREATE TABLE transactions (
     transaction_id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Unique transaction id',
@@ -77,6 +76,11 @@ CREATE TABLE IF NOT EXISTS system_logs (
     INDEX idx_log_time (created_at)
 );
 
+-- Indexes
+CREATE INDEX idx_phone_number ON users(phone_number);
+CREATE INDEX idx_transaction_date ON transactions(transaction_date);
+CREATE INDEX idx_user_transaction ON user_transactions(user_id, transaction_id);
+
 -- Registering unique participants
 insert into users (user_id, name, phone_number, entity_type) values 
 (1, 'Main User', '36521838', 'SELF'),          
@@ -95,12 +99,6 @@ insert into transaction_categories (category_id, category_name) values
 (3, 'MERCHANT'),      -- Payment to a merchant code
 (4, 'WITHDRAW'),      -- Agent withdrawal
 (5, 'BILLS');         -- Service payments (Bundles,Electricity,...)
-
--- Indexes
-CREATE INDEX idx_phone_number ON users(phone_number);
-CREATE INDEX idx_transaction_date ON transactions(transaction_date);
-CREATE INDEX idx_user_transaction ON user_transactions(user_id, transaction_id);
-
 
 
 -- Records of 6 sample transactions (5 Completed, 1 Failed)
