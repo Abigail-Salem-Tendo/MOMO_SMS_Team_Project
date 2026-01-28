@@ -1,8 +1,8 @@
 
 
-CREATE DATABASE momooo;
+CREATE DATABASE momo_db;
 
-USE momooo;
+USE momo_db;
 
 -- 1. Users
 CREATE TABLE users (
