@@ -1,3 +1,4 @@
+USE  momo_db;
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
@@ -129,6 +130,12 @@ INSERT INTO system_logs (transaction_id, log_level, status, message) VALUES
 (3, 'INFO', 'COMPLETED', 'Balance update synchronized.'),
 (4, 'WARNING', 'FLAGGED', 'High frequency transaction detected.'),
 (5, 'INFO', 'COMPLETED', 'Cash withdrawal agent verified.');
+
+-- Indexes
+CREATE INDEX idx_phone_number ON users(phone_number);
+CREATE INDEX idx_transaction_date ON transactions(transaction_date);
+CREATE INDEX idx_user_transaction ON user_transactions(user_id, transaction_id);
+
 
 
 
