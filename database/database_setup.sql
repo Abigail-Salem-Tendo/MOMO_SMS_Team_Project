@@ -1,3 +1,7 @@
+# Create database, Use database, remove the alters.
+CREATE DATABASE momo_db;
+
+USE momo_db;
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'unique id for each user',
     name VARCHAR(150) NOT NULL COMMENT 'the name of the user',
@@ -5,6 +9,11 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time'
 
 ); 
+
+CREATE TABLE IF NOT EXISTS transaction_categories (
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(50) UNIQUE NOT NULL COMMENT 'e.g., P2P, MERCHANT, BILLS'
+);
 
 CREATE TABLE transactions (
     transaction_id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Unique transaction id',
@@ -31,38 +40,6 @@ CREATE TABLE user_transactions (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-
-ALTER TABLE users 
-    MODIFY name VARCHAR(150) NOT NULL COMMENT 'Full name of the user',
-    MODIFY phone_number VARCHAR(15) NOT NULL COMMENT 'Unique phone handle';
-
-ALTER TABLE users 
-ADD COLUMN entity_type ENUM('SELF', 'INDIVIDUAL', 'MERCHANT', 'AGENT') 
-DEFAULT 'INDIVIDUAL' 
-COMMENT 'Type of user: Self, Person, Business, or Agent'
-AFTER phone_number;
-
-ALTER TABLE transactions 
-    MODIFY transaction_date DATETIME NOT NULL COMMENT 'Date extracted from SMS',
-    MODIFY amount DECIMAL(15, 2) NOT NULL COMMENT 'Transaction amount in RWF',
-    MODIFY fees DECIMAL(10, 2) DEFAULT 0.00 COMMENT 'Service fees charged';
-
-ALTER TABLE transactions 
-ADD COLUMN external_ref_id VARCHAR(50) UNIQUE NOT NULL COMMENT 'Unique MoMo Transaction ID' 
-AFTER transaction_id;
-
-ALTER TABLE user_transactions 
-    MODIFY role ENUM('SENDER', 'RECEIVER') NOT NULL COMMENT 'Role: SENDER or RECEIVER',
-    MODIFY balance_after DECIMAL(15, 2) COMMENT 'Balance snapshot after event';
-
-CREATE TABLE IF NOT EXISTS transaction_categories (
-    category_id INT AUTO_INCREMENT PRIMARY KEY,
-    category_name VARCHAR(50) UNIQUE NOT NULL COMMENT 'e.g., P2P, MERCHANT, BILLS'
-);
-
--- linking to transactions
-ALTER TABLE transactions 
-    ADD FOREIGN KEY (category_id) REFERENCES transaction_categories(category_id);
 
 CREATE TABLE IF NOT EXISTS system_logs (
     log_id INT AUTO_INCREMENT PRIMARY KEY,
