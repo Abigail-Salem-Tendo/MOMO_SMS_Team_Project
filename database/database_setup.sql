@@ -89,7 +89,7 @@ insert into users (user_id, name, phone_number, entity_type) values
 (4, 'Alex Doe', '43810', 'MERCHANT'),             		
 (5, 'Agent Sophia', '250790777777', 'AGENT'), 
 (6, 'Linda Green', '*********806', 'INDIVIDUAL'),   
-(7, 'Bundles and Packs', 'Bundles and Packs', 'MERCHANT');
+(7, 'Bundles and Packs', 'Bundles&Packs', 'MERCHANT');
 
 
 -- Define the types of transactions 
