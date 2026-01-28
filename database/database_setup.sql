@@ -1,8 +1,8 @@
 
 
-CREATE DATABASE momo_db;
+CREATE DATABASE momooo;
 
-USE momo_db;
+USE momooo;
 
 -- 1. Users
 CREATE TABLE users (
@@ -108,8 +108,26 @@ INSERT INTO system_logs (transaction_id, log_level, status, message) VALUES
 (5, 'INFO', 'COMPLETED', 'Payment to Robert confirmed.');
 
 
-#testing
+#CRUD operations
 
+-- Create operations
+-- 1: Add two new users (one sender, one receiver)
+INSERT INTO users (name, phone_number, entity_type) VALUES 
+('David Miller', '0788111222', 'INDIVIDUAL'), -- ID 7
+('Sarah Jones', '0788333444', 'INDIVIDUAL');  -- ID 8
+
+-- Step 2: Create the main Transaction record
+INSERT INTO transactions (external_ref_id, transaction_date, amount, fees, category_id, raw_message) 
+VALUES ('TRX999888777', '2025-01-20 09:00:00', 15000.00, 150.00, 2, 'Manual P2P Test David to Sarah');
+
+-- Step 3: Link users to the transaction in the user_transactions table
+-- Assuming the transaction_id generated is 6
+INSERT INTO user_transactions (transaction_id, user_id, role, balance_after) VALUES 
+(6, 7, 'SENDER', 5000.00),  -- David sent money
+(6, 8, 'RECEIVER', 15000.00); -- Sarah received money
+
+-- Read operation
+-- Query to retrieve all transactions with sender and receiver names
 SELECT 
     t.transaction_id,
     sender.name AS Sent_By,
@@ -121,3 +139,17 @@ JOIN user_transactions ut1 ON t.transaction_id = ut1.transaction_id AND ut1.role
 JOIN users sender ON ut1.user_id = sender.user_id
 JOIN user_transactions ut2 ON t.transaction_id = ut2.transaction_id AND ut2.role = 'RECEIVER'
 JOIN users receiver ON ut2.user_id = receiver.user_id;
+
+-- Update operation
+-- Promoting Jane Smith to an Agent status
+UPDATE users SET entity_type = 'AGENT' WHERE name = 'Jane Smith';
+
+-- Delete operations
+-- 1. Remove the link between the test users and the transaction
+DELETE FROM user_transactions WHERE transaction_id = 6;
+
+-- 2. Remove the transaction itself
+DELETE FROM transactions WHERE transaction_id = 6;
+
+-- 3. Remove the test users
+DELETE FROM users WHERE user_id IN (7, 8);
