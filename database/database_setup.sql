@@ -4,6 +4,7 @@ CREATE DATABASE momo_db;
 
 USE momo_db;
 
+-- 1. Users
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'unique id for each user',
     name VARCHAR(150) NOT NULL COMMENT 'the name of the user',
@@ -13,9 +14,8 @@ CREATE TABLE users (
         COMMENT 'Type of user: Self, Person, Business, or Agent',
     INDEX idx_phone_number (phone_number)
 ); 
- -- 1. Categories (referenced by transactions)
 
--- 2. Users
+-- 2. Categories (referenced by transactions)
 CREATE TABLE IF NOT EXISTS transaction_categories (
     category_id INT AUTO_INCREMENT PRIMARY KEY,
     category_name VARCHAR(50) UNIQUE NOT NULL COMMENT 'e.g., P2P, MERCHANT, BILLS'
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS transactions (
 );
 
 
--- 4. User -> Transaction link (role per transaction)
+-- 4. User to Transaction link (role per transaction)
 CREATE TABLE IF NOT EXISTS user_transactions (
     user_transaction_id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Primary key for the user_transactions table',
     transaction_id INT NOT NULL COMMENT 'linked transaction',
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS user_transactions (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
--- 5. System logs (transaction_id is nullable so ON DELETE SET NULL works)
+-- 5. System logs for tracking processing steps
 CREATE TABLE IF NOT EXISTS system_logs (
     log_id INT AUTO_INCREMENT PRIMARY KEY,
     transaction_id INT NULL COMMENT 'Links log to a specific transaction event',
@@ -65,27 +65,11 @@ CREATE TABLE IF NOT EXISTS system_logs (
 );
 
 
-
-
-
-# To resolve possible problems in our Db 
-SET FOREIGN_KEY_CHECKS = 0;
-
-TRUNCATE TABLE system_logs;
-TRUNCATE TABLE user_transactions;
-TRUNCATE TABLE transactions;
-TRUNCATE TABLE users;
-TRUNCATE TABLE transaction_categories;
-
-
-SET FOREIGN_KEY_CHECKS = 1;
-
-
--- 4. INSERT CATEGORIES 1st
+-- 4. Adding sample categories
 INSERT INTO transaction_categories (category_id, category_name) VALUES 
 (1, 'P2P_RECEIVE'), (2, 'P2P_SEND'), (3, 'MERCHANT_PAY'), (4, 'WITHDRAWAL'), (5, 'BILL_PAY');
 
--- 5. INSERT USERS 2nd
+-- 5. Adding sample users
 INSERT INTO users (user_id, name, phone_number, entity_type) VALUES 
 (1, 'My Device', '0788000000', 'SELF'),
 (2, 'Jane Smith', '0788123013', 'INDIVIDUAL'),
@@ -94,7 +78,7 @@ INSERT INTO users (user_id, name, phone_number, entity_type) VALUES
 (5, 'Airtime', 'MTN_AIRTIME', 'MERCHANT'),
 (6, 'Robert Brown', '0788999999', 'INDIVIDUAL');
 
--- 6. INSERT TRANSACTIONS 3rd
+-- 6. Adding sample user_transactions
 INSERT INTO transactions (transaction_id, external_ref_id, transaction_date, amount, fees, category_id, raw_message) VALUES
 (1, '76662021700', '2024-05-10 16:30:51', 2000.00, 0.00, 1, 'Imported from XML: Received 2000'),
 (2, '51732411227', '2024-05-10 21:32:32', 600.00, 0.00, 2, 'Imported from XML: Payment to Samuel'),
@@ -102,6 +86,7 @@ INSERT INTO transactions (transaction_id, external_ref_id, transaction_date, amo
 (4, '13913173274', '2024-05-12 11:41:28', 2000.00, 0.00, 5, 'Imported from XML: Airtime'),
 (5, '26614842768', '2024-05-12 17:58:15', 1000.00, 0.00, 2, 'Imported from XML: Payment to Robert');
 
+-- 7. Adding sample user roles in transactions
 INSERT IGNORE INTO user_transactions (transaction_id, user_id, role, balance_after) VALUES
 (1, 2, 'SENDER', NULL),
 (1, 1, 'RECEIVER', 2000.00),
@@ -114,6 +99,7 @@ INSERT IGNORE INTO user_transactions (transaction_id, user_id, role, balance_aft
 (5, 1, 'SENDER', 9880.00),
 (5, 6, 'RECEIVER', NULL);
 
+-- 8. Adding sample system logs
 INSERT INTO system_logs (transaction_id, log_level, status, message) VALUES
 (1, 'INFO', 'COMPLETED', 'Parsed incoming P2P from XML batch.'),
 (2, 'INFO', 'COMPLETED', 'Verified outgoing payment to Samuel.'),
