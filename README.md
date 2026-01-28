@@ -21,3 +21,6 @@ Architecture diagram: https://drive.google.com/file/d/1vIbDJC-reycJXF7FDjH24iFLt
 
 ## Scrum Board
 Project board: https://trello.com/b/A1phIJrH/devstrike
+
+link to the task sheet 
+https://docs.google.com/spreadsheets/d/1xv2X56_YN_ZU_v4iM236iwAVSosTLOHUO1d4qKlY998/edit?usp=sharing
