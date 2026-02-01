@@ -4,7 +4,7 @@ name: Keep Aiven MySQL Running
 on:
   schedule:
     - cron: '0 * * * *'  # every hour
-  workflow_dispatch:      # allows manual trigger from GitHub Actions
+  workflow_dispatch:      # allows manual trigger
 
 jobs:
   keep-mysql-running:
@@ -29,9 +29,10 @@ jobs:
           echo "Current status: $STATUS"
 
           if [ "$STATUS" != "RUNNING" ]; then
-            echo "Service is not running. Starting..."
-            curl -s -X POST -H "Authorization: Bearer $AIVEN_TOKEN" \
-              https://api.aiven.io/v1/project/$PROJECT_NAME/service/$SERVICE_NAME/start
-            echo "Service start request sent."
+              echo "Service is not running. Starting..."
+              curl -s -X POST -H "Authorization: Bearer $AIVEN_TOKEN" \
+                https://api.aiven.io/v1/project/$PROJECT_NAME/service/$SERVICE_NAME/start
+              echo "Service started ⚡"
           else
-            echo "Service is already running."
+              echo "Service is already running"
+          fi
