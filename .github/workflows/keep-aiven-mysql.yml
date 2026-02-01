@@ -1,0 +1,37 @@
+name: Keep Aiven MySQL Running
+
+# Schedule: runs every hour
+on:
+  schedule:
+    - cron: '0 * * * *'  # every hour
+  workflow_dispatch:      # allows manual trigger from GitHub Actions
+
+jobs:
+  keep-mysql-running:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Ensure MySQL Service is Running
+        env:
+          AIVEN_TOKEN: ${{ secrets.AIVEN_TOKEN }}
+        run: |
+          PROJECT_NAME="alustudent-6e44"
+          SERVICE_NAME="mysql-1579901e"
+
+          echo "Checking Aiven MySQL service status..."
+          STATUS=$(curl -s -H "Authorization: Bearer $AIVEN_TOKEN" \
+            https://api.aiven.io/v1/project/$PROJECT_NAME/service/$SERVICE_NAME \
+            | jq -r '.service.state')
+
+          echo "Current status: $STATUS"
+
+          if [ "$STATUS" != "RUNNING" ]; then
+            echo "Service is not running. Starting..."
+            curl -s -X POST -H "Authorization: Bearer $AIVEN_TOKEN" \
+              https://api.aiven.io/v1/project/$PROJECT_NAME/service/$SERVICE_NAME/start
+            echo "Service start request sent."
+          else
+            echo "Service is already running."
