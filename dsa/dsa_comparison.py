@@ -40,18 +40,21 @@ if __name__ == "__main__":
         print(f"search for : {test_id}")
 
         #testing the linear
-        start = time.perf_counter()
+        start_linear = time.perf_counter()
         for _ in range(iterations):
             linear_search(data, test_id)
-        end = time.perf_counter() - start
-        print(f"search : end time: {end:.8f}s")
+        end_linear = time.perf_counter() - start_linear
+        print(f"Linear Search : end time: {end_linear:.8f}s")
 
         #testing the dictionary search
         start_dict = time.perf_counter()
         for i in range(iterations):
             dict_search(trans_dict, test_id)
         end_dict = time.perf_counter() - start_dict
-        print(f"dict search : end time: {end_dict:.8f}s")
+        print(f"Dictionary Search : end time: {end_dict:.8f}s")
+
+        # Performance Proof
+        print(f"Efficiency Gain: {end_linear / end_dict:.1f}x faster.")
 
 
 
