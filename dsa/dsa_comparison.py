@@ -23,6 +23,10 @@ def linear_search(transaction_list, target_id):
             return transaction
     return None
 
+def dict_search(trans_dict, target_id):
+    """O(1) search"""
+    return trans_dict.get(target_id)
+
 #testing the linear search function
 if __name__ == "__main__":
     data = load_data()
@@ -39,3 +43,4 @@ if __name__ == "__main__":
             linear_search(data, test_id)
         end = time.perf_counter() - start
         print(f"search : end time: {end:.8f}s")
+
