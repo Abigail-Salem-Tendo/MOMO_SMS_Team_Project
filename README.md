@@ -23,7 +23,7 @@ The goal is to demonstrate enterprise-level fullstack development skills, includ
 ##  Added features
  
  
-  #### Data parsing
+#### Data parsing
 
   the data that is provided in an XML file (modified_sms_v2.xml) is parsed and converted into JSON objects using a python script. 
    Each SMS contains transaction details such as: 
@@ -36,9 +36,12 @@ The goal is to demonstrate enterprise-level fullstack development skills, includ
    - raw message
   
     
-    ##### set up and runnign the data parser 
+##### set up and running  the data parser 
+
       - requirements 
        . python 3 
+
+
 
     * steps 
     1. clone the repository using git clone command
@@ -47,6 +50,8 @@ The goal is to demonstrate enterprise-level fullstack development skills, includ
     4. run xml_parsing.py 
        - python3 xml_parsing.py 
     5. after running the file the parsed transaction data will be saved in the parsed_transactions.json file 
+
+
 
 ## REST API endpoint run instructions
 To run the API endpoints, you need to first have;
