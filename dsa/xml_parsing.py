@@ -4,14 +4,16 @@ import re
 from datetime import datetime
 import os
 
+#paths for the files 
+script_dir = os.path.dirname(os.path.abspath(__file__)) 
+xml_file_path = os.path.join(script_dir, "..", "data", "modified_sms_v2.xml")
+json_file_path = os.path.join(script_dir, "..", "data", "parsed_transactions.json")
 
-xml_file_path = "data/modified_sms_v2.xml"  
-json_file_path = os.path.join(os.path.dirname(xml_file_path), "transactions.json")
-
-
+# ensure that the folder are there 
 folder = os.path.dirname(json_file_path)
 os.makedirs(folder, exist_ok=True) 
 
+#parse the xml file
 tree = ET.parse(xml_file_path)
 root = tree.getroot()
 
