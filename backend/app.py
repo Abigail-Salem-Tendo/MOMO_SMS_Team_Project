@@ -167,6 +167,45 @@ def create_transaction():
     finally:
         connection.close()
 
+# PUT update a system log related to a specific transaction using the transaction_ID
+@app.route('/update-transaction/<int:tx_id>', methods=['PUT'])
+def update_transaction_log(tx_id):
+    data = request.json
+    
+    # Validate the required fields are present in the request body
+    required_fields = ['log_level', 'message', 'status']
+    if not data or not all(field in data for field in required_fields):
+        return jsonify({"error": "Please provide log_level, message, and status"}), 400
+
+    connection = get_db_connection()
+    try:
+        with connection.cursor() as cursor:
+            # Update the system_logs table attributes for the given transaction ID
+            update_sqlscript = """
+                UPDATE system_logs 
+                SET log_level = %s, message = %s, status = %s
+                WHERE transaction_id = %s
+            """
+            cursor.execute(update_sqlscript, (
+                data['log_level'], 
+                data['message'], 
+                data['status'], 
+                tx_id
+            ))
+            
+            # Check if any row was actually updated, if not, return no changes made
+            if cursor.rowcount == 0:
+                return jsonify({"error": "No log changes were made for this transaction ID"}), 404
+                
+        connection.commit()
+        return jsonify({"message": "System log and log status updated successfully"}), 200
+    except Exception as e:
+        # On error, remove any changes made during this transaction
+        connection.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        connection.close()
+
 
 if __name__ == '__main__':
     app.run(debug=True)
