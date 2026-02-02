@@ -3,9 +3,17 @@ This is a script that will compare the different times of
 linear search and dictionary search
 """
 import time
-from xml_parsing import parse_sms_xml
+import json
+import os
+
+from dsa.xml_parsing import json_file_path
 
 #the sample data set goes here;
+json_file_path = os.path.join("..", "data", "parsed_transactions.json")
+
+def load_data():
+    with open(json_file_path) as json_file:
+        return json.load(json_file)
 
 #Linear search method
 def linear_search(transaction_list, target_id):
@@ -17,7 +25,7 @@ def linear_search(transaction_list, target_id):
 
 #testing the linear search function
 if __name__ == "__main__":
-    data = parse_sms_xml("modified_sms_v2.xml")
+    data = load_data()
 
     #find and id
     if data:
