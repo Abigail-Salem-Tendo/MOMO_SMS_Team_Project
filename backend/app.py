@@ -84,3 +84,7 @@ def get_transaction_by_id(transaction_id):
             abort(404, description="Transaction not found")
     finally:
         connection.close()
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
