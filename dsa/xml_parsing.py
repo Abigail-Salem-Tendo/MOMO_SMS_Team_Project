@@ -106,6 +106,6 @@ with open(json_file_path, "w") as json_file:
 # Confirm
 if os.path.exists(json_file_path):
     print(f"Transactions successfully saved to: {json_file_path}")
-    print("Files in this folder:", os.listdir(folder))
+    print("To view the file, change the directory to the data folder and open parsed_transactions.json")
 else:
     print("File was not saved")
