@@ -208,5 +208,29 @@ def update_transaction_log(tx_id):
         connection.close()
 
 
+# DELETE a transaction and all its related data using its specific transaction_ID
+@app.route('/delete-transaction/<int:tx_id>', methods=['DELETE'])
+def delete_transaction(tx_id):
+    connection = get_db_connection()
+    try:
+        with connection.cursor() as cursor:
+            # Delete related records in other tables first to maintain referential integrity from system_logs and user_transactions
+            cursor.execute("DELETE FROM system_logs WHERE transaction_id = %s", (tx_id,))
+            cursor.execute("DELETE FROM user_transactions WHERE transaction_id = %s", (tx_id,))
+
+            # Delete the main transaction record
+            cursor.execute("DELETE FROM transactions WHERE transaction_id = %s", (tx_id,))
+
+            if cursor.rowcount == 0:
+                return jsonify({"error": "Transaction not found"}), 404
+
+        connection.commit()
+        return jsonify({"message": f"Transaction with Id:{tx_id} and all its related data are deleted"}), 200
+    except Exception as e:
+        connection.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        connection.close()
+
 if __name__ == '__main__':
     app.run(debug=True)
