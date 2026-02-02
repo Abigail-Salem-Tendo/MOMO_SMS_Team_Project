@@ -170,6 +170,7 @@ def create_transaction():
 
 # PUT update a system log related to a specific transaction using the transaction_ID
 @app.route('/update-transaction/<int:tx_id>', methods=['PUT'])
+@require_auth # basic auth
 def update_transaction_log(tx_id):
     data = request.json
     
@@ -210,6 +211,7 @@ def update_transaction_log(tx_id):
 
 # DELETE a transaction and all its related data using its specific transaction_ID
 @app.route('/delete-transaction/<int:tx_id>', methods=['DELETE'])
+@require_auth # basic auth
 def delete_transaction(tx_id):
     connection = get_db_connection()
     try:
