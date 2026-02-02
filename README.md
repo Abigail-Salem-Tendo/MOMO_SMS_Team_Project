@@ -41,9 +41,8 @@ The goal is to demonstrate enterprise-level fullstack development skills, includ
       - requirements 
        . python 3 
 
+###### steps
 
-
-    * steps 
     1. clone the repository using git clone command
     2. cd directory to the repository MOMO_SMS_Team_Project
     3. cd to dsa 
