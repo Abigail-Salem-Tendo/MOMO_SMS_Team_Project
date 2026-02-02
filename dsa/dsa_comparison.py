@@ -31,6 +31,7 @@ def dict_search(trans_dict, target_id):
 #testing the linear search function
 if __name__ == "__main__":
     data = load_data()
+    trans_dict = {transaction["id"]: transaction for transaction in data}
 
     #find and id
     if data:
@@ -44,4 +45,14 @@ if __name__ == "__main__":
             linear_search(data, test_id)
         end = time.perf_counter() - start
         print(f"search : end time: {end:.8f}s")
+
+        #testing the dictionary search
+        start_dict = time.perf_counter()
+        for i in range(iterations):
+            dict_search(trans_dict, test_id)
+        end_dict = time.perf_counter() - start_dict
+        print(f"dict search : end time: {end_dict:.8f}s")
+
+
+
 
