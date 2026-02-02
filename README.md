@@ -33,10 +33,10 @@ The goal is to demonstrate enterprise-level fullstack development skills, includ
    - Receiver 
    - Transaction reference ID
    - Timestamp
-   - ram message
+   - raw message
   
     
-    #####set up and runnign the data parser 
+    ##### set up and runnign the data parser 
       - requirements 
        . python 3 
 
