@@ -3,6 +3,9 @@ import pymysql
 import os
 from dotenv import load_dotenv
 
+# importing auth
+from auth import require_auth
+
 # load the configuration file
 load_dotenv()
 
@@ -22,6 +25,9 @@ def get_db_connection():
 
 # GET all transactions with all their info
 @app.route('/transactions', methods=['GET'])
+
+@require_auth # basic auth
+
 def get_all_transactions():
     try:
         connection = get_db_connection()
@@ -53,6 +59,7 @@ def get_all_transactions():
 
 # GET a specific transaction by using its transaction_ID and get all info related to that transaction
 @app.route('/transactions/<int:transaction_id>', methods=['GET'])
+@require_auth # basic auth
 def get_transaction_by_id(transaction_id):
     try:
         connection = get_db_connection()
