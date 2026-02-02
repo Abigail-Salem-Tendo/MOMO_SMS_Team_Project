@@ -3,9 +3,17 @@ This is a script that will compare the different times of
 linear search and dictionary search
 """
 import time
-from xml_parsing import parse_sms_xml
+import json
+import os
+
+from dsa.xml_parsing import json_file_path
 
 #the sample data set goes here;
+json_file_path = os.path.join("..", "data", "parsed_transactions.json")
+
+def load_data():
+    with open(json_file_path) as json_file:
+        return json.load(json_file)
 
 #Linear search method
 def linear_search(transaction_list, target_id):
@@ -15,18 +23,25 @@ def linear_search(transaction_list, target_id):
             return transaction
     return None
 
+#Dictionary search method (O(1) average time complexity)
+def dict_search(trans_dict, target_id):
+    """O(1) search"""
+    return trans_dict.get(target_id)
+
 #testing the linear search function
 if __name__ == "__main__":
-    data = parse_sms_xml("modified_sms_v2.xml")
+    data = load_data()
 
     #find and id
     if data:
-        test_id = data[0]["id"]
+        test_id = data[-1]["id"]
+        iterations = 100000
         print(f"search for : {test_id}")
-        start = time.perf_counter()
-        result = linear_search(data, test_id)
-        end = time.perf_counter()
 
-        if result:
-            print(f"Found Transaction! Body: {result['body'][:50]}...")
-            print(f"Time taken: {end - start:.8f}s")
+        #testing the linear
+        start = time.perf_counter()
+        for _ in range(iterations):
+            linear_search(data, test_id)
+        end = time.perf_counter() - start
+        print(f"search : end time: {end:.8f}s")
+
