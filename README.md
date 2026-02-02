@@ -45,8 +45,54 @@ The goal is to demonstrate enterprise-level fullstack development skills, includ
        - python3 xml_parsing.py 
     5. after running the file the parsed transaction data will be saved in the parsed_transactions.json file 
 
-#### REST API 
+## REST API endpoint run instructions
+To run the API endpoints, you need to first have;
+### 1. Prerequisites
+- 'Python 3.x'
+- 'MySQL 8.x'
+- 'Database credentials (Aiven or Local)'
 
+### 2. Install Dependencies
+```bash
+python -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
+pip install flask pymysql python-dotenv
+```
+
+### 3. Environment Configuration (.env)
+
+The application reads database credentials from a .env file using python-dotenv. This .env is to be created in the root of the respository
+Required Environment Variables
+```bash
+DB_HOST="host"
+DB_PORT="port-number"
+DB_USER="username"
+DB_PASSWORD="password"
+DB_NAME="database name"
+```
+
+### 4. Starting the application
+```bash
+cd backend
+python app.py
+```
+The application will start on:
+```bash
+http://127.0.0.1:5000
+```
+
+### Using curl or Postman or any other tool for API testing
+Here are the ednpoints;
+- GET /list-transactions → list all transactions
+
+- GET /transaction-details/{id} → view one transaction details
+
+- POST /create-transaction → add a new transaction
+
+- PUT /update-transaction/{id} → update an existing record
+
+- DELETE /delete-transaction/{id} → delete a record.
+ 
 
 #### Authentication and security 
 
