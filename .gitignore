@@ -1,2 +1,4 @@
 .env
 db-config.py
+
+backend/__pycache__/
