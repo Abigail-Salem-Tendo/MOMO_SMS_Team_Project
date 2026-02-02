@@ -92,19 +92,21 @@ Here are the ednpoints;
 - PUT /update-transaction/{id} → update an existing record
 
 - DELETE /delete-transaction/{id} → delete a record.
+
+For more details about request bodies of the endpoints refer to the API documentation file in docs/api_docs.md
  
 
-#### Authentication and security 
+## Authentication and security 
 
 All API endpoints are protected using HTTP Basic Authentication 
 for more detailed explained checkout the documentation file in docs/api_docs.md
 
-#### Data structures and Algorithms 
+## Data structures and Algorithms 
 to ensure that our system remains scalable as transaction volume grows, we implemented a performance test to compare the search efficiencies of linear and optimized data structures.
 - Linear search (O(n)): This iterates through the transaction list. The performance degrades as the dataset size increases.
 - Dictionary Lookup (O(1)): This method implements a Hash Map to jump directly to the data using its ID, ensuring constant-time performance regardless of the dataset size.
 
-##### Steps to run the comparison
+### Steps to run the comparison
 1. Ensure the data exists by running the parser
 
 2. In the dsa directory run the comparison script: 
@@ -114,7 +116,7 @@ to ensure that our system remains scalable as transaction volume grows, we imple
 3. The results will display the total execution time for both methods, proving the efficiency of the O(1) approach
 
 
-#### Testing 
+## Testing 
 the API can be tested using:
  . Postman 
  . curl 
