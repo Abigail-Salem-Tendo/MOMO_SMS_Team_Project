@@ -92,6 +92,81 @@ def get_transaction_by_id(transaction_id):
     finally:
         connection.close()
 
+# POST a new transaction (Creation of a new transaction)
+@app.route('/transactions', methods=['POST'])
+def create_transaction():
+    # Get the JSON data sent in the request body
+    if not request.is_json:
+        return jsonify({"error": "Expected JSON body"}), 415
+
+    data = request.json
+    
+    # Validate the required fields are present
+    required_fields = ['transaction_date', 'amount', 'category_id', 'sender_id', 'receiver_id', 'status']
+    if not data or not all(k in data for k in required_fields):
+        return jsonify({"error": "Missing required fields"}), 400
+    
+    connection = get_db_connection()
+    if not connection:
+        return jsonify({"error": "Database connection failed"}), 500
+
+    try:
+        with connection.cursor() as cursor:
+            # Insert the main transaction record into transactions table
+            transaction_sqlscript = """
+                INSERT INTO transactions 
+                (external_ref_id, transaction_date, amount, fees, category_id, status, raw_message) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """
+            cursor.execute(transaction_sqlscript, (
+                data.get('external_ref_id'),
+                data['transaction_date'], 
+                data['amount'], 
+                data.get('fees', 0.0),
+                data['category_id'], 
+                data.get('status', 'SUCCESS'), 
+                data.get('raw_message')
+            ))
+            
+            # Get the new genereted transaction ID to use in user_transactions table
+            created_transactionId = cursor.lastrowid
+
+            # Insert a record into user_transactions to link the sender to this transaction.
+            sender_sqlscript = """
+                INSERT INTO user_transactions (transaction_id, user_id, role, balance_after)
+                VALUES (%s, %s, 'SENDER', %s)
+            """
+            cursor.execute(sender_sqlscript, (
+                created_transactionId, 
+                data['sender_id'], 
+                data.get('sender_balance_after')
+            ))
+
+            # Insert a record into user_transactions to link the receiver to this transaction.
+            receiver_sqlscript = """
+                INSERT INTO user_transactions (transaction_id, user_id, role, balance_after)
+                VALUES (%s, %s, 'RECEIVER', %s)
+            """
+            cursor.execute(receiver_sqlscript, (
+                created_transactionId, 
+                data['receiver_id'], 
+                data.get('receiver_balance_after')
+            ))
+
+        connection.commit()
+        return jsonify({
+            "message": "Transaction created successfully",
+            "transaction_id": created_transactionId
+        }), 201
+
+    except Exception as e:
+        # If any error occurs,remove all changes made during this transaction.
+        connection.rollback()
+
+        return jsonify({"error": "Transaction failed", "details": str(e)}), 500
+    finally:
+        connection.close()
+
 
 if __name__ == '__main__':
     app.run(debug=True)
