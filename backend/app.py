@@ -59,7 +59,7 @@ def get_all_transactions():
 
 # GET a specific transaction by using its transaction_ID and get all info related to that transaction
 @app.route('/transaction-details/<int:transaction_id>', methods=['GET'])
-@require_auth # basic auth#
+@require_auth # basic auth
 def get_transaction_by_id(transaction_id):
     try:
         connection = get_db_connection()
@@ -94,6 +94,7 @@ def get_transaction_by_id(transaction_id):
 
 # POST a new transaction (Creation of a new transaction)
 @app.route('/create-transaction', methods=['POST'])
+@require_auth # basic auth
 def create_transaction():
     # Get the JSON data sent in the request body
     if not request.is_json:
