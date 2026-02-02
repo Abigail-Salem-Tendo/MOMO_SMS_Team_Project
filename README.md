@@ -3,6 +3,13 @@
 ## Project Description
 This project processes MoMo SMS data provided in XML format. The system extracts, cleans, and categorizes transaction data, stores it in a relational database, and presents analytics through a simple frontend dashboard.
 
+The system:
+ - parses raw SMS data from an XML file
+ - Converts it into structured stransaction records 
+ -  Provides CRUD API endpoints to access the data 
+ - Secures endpoints using HTTP basic Authentication
+ - 
+
 The goal is to demonstrate enterprise-level fullstack development skills, including backend data processing, database management, and frontend visualization.
 
 ## Team Members
@@ -14,6 +21,7 @@ The goal is to demonstrate enterprise-level fullstack development skills, includ
 
 
 ### Added features
+ 
  
   #### Data parsing 
   the data that is provided in an XML file (modified_sms_v2.xml) is parsed and converted into JSON objects using a python script. 
