@@ -59,7 +59,7 @@ def get_all_transactions():
 
 # GET a specific transaction by using its transaction_ID and get all info related to that transaction
 @app.route('/transactions/<int:transaction_id>', methods=['GET'])
-@require_auth # basic auth
+@require_auth # basic auth#
 def get_transaction_by_id(transaction_id):
     try:
         connection = get_db_connection()
