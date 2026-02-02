@@ -23,6 +23,7 @@ def linear_search(transaction_list, target_id):
             return transaction
     return None
 
+#Dictionary search method (O(1) average time complexity)
 def dict_search(trans_dict, target_id):
     """O(1) search"""
     return trans_dict.get(target_id)
