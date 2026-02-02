@@ -102,3 +102,4 @@ if os.path.exists(json_file_path):
     print("To view the file, change the directory to the data folder and open parsed_transactions.json")
 else:
     print("File was not saved")
+  
