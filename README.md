@@ -43,6 +43,19 @@ The goal is to demonstrate enterprise-level fullstack development skills, includ
 
 
 #### Data structures and Algorithms 
+To ensure that our system remains scalable as transaction volume grows, we implemented a performance test to compare the search efficiencies of linear and optimized data structures.
+- Linear search (O(n)): This iterates through the transaction list. The performance degrades as the dataset size increases.
+- Dictionary Lookup (O(1)): This method implements a Hash Map to jump directly to the data using its ID, ensuring constant-time performance regardless of the dataset size.
+
+##### Steps to run the comparison
+1. Ensure the data exists by running the parser
+
+2. In the dsa directory run the comparison script: 
+
+    `python3 dsa_comparison.py`
+
+3. The results will display the total execution time for both methods, proving the efficiency of the O(1) approach
+
 
 
 #### Testing 
