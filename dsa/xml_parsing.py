@@ -62,22 +62,16 @@ for sms in root.findall("sms"):
     # Transaction Type & Category
     body_lower = body.lower()
     if "received" in body_lower:
-        tx_type = "P2P_RECEIVE"
-        category = "P2P"
+        category = "P2P_RECEIVE"
     elif "paid" in body_lower:
-        tx_type = "P2P_SEND"
-        category = "P2P"
+        category = "P2P_SEND"
     elif "withdrawn" in body_lower:
-        tx_type = "WITHDRAWAL"
         category = "WITHDRAWAL"
     elif "deposited" in body_lower:
-        tx_type = "DEPOSIT"
         category = "DEPOSIT"
     elif "airtime" in body_lower:
-        tx_type = "AIRTIME_PURCHASE"
-        category = "AIRTIME"
+        category = "AIRTIME_PURCHASE"
     else:
-        tx_type = "OTHER"
         category = "OTHER"
 
     # Convert timestamp
@@ -92,18 +86,17 @@ for sms in root.findall("sms"):
         "receiver_name": receiver_name,
         "receiver_number": receiver_number,
         "fee": fee,
-        "type": tx_type,
         "category": category,
         "date": transaction_date
     })
 
     transaction_id += 1
 
-# Save to JSON
+# saving to JSON file
 with open(json_file_path, "w") as json_file:
     json.dump(transactions, json_file, indent=4)
 
-# Confirm
+# confirmation message
 if os.path.exists(json_file_path):
     print(f"Transactions successfully saved to: {json_file_path}")
     print("To view the file, change the directory to the data folder and open parsed_transactions.json")
