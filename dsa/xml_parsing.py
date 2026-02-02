@@ -4,16 +4,16 @@ import re
 from datetime import datetime
 import os
 
-# Paths
+# path to the files 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 xml_file_path = os.path.join(script_dir, "..", "data", "modified_sms_v2.xml")
 json_file_path = os.path.join(script_dir, "..", "data", "parsed_transactions.json")
 
-# Ensure folder exists
+# ensure that the folder for the data exists
 folder = os.path.dirname(json_file_path)
 os.makedirs(folder, exist_ok=True)
 
-# Parse XML
+# parsing the XML file
 tree = ET.parse(xml_file_path)
 root = tree.getroot()
 
@@ -27,31 +27,31 @@ for sms in root.findall("sms"):
     if not body:
         continue
 
-    # Transaction ID
-    tx_id_match = re.search(r"Transaction Id[:\s]*([0-9]+)", body, re.IGNORECASE)
+    # getting the external reference (TxId or Transaction Id)
+    tx_id_match = re.search(r"(?:TxId|TxID|Transaction Id)[:\s]*([0-9]+)", body, re.IGNORECASE)
     external_ref = tx_id_match.group(1) if tx_id_match else None
 
-    # Amount
-    amount_match = re.search(r"(\d+)\s*RWF", body)
-    amount = int(amount_match.group(1)) if amount_match else None
+    # the transaction amount
+    amount_match = re.search(r"([0-9]{1,3}(?:,?[0-9]{3})*|[0-9]+)\s*RWF", body)
+    amount = int(amount_match.group(1).replace(",", "")) if amount_match else None
 
-    # Fee
+    # the fees imposed on the transaction
     fee_match = re.search(r"fee[:\s]*(\d+)\s*RWF", body, re.IGNORECASE)
     fee = int(fee_match.group(1)) if fee_match else None
 
-    # Sender / Receiver Numbers (look for numbers near from/to)
+    # senderand receiver numbers
     sender_number_match = re.search(r"from\s+(\*?\+?\d+)", body, re.IGNORECASE)
     receiver_number_match = re.search(r"to\s+(\*?\+?\d+)", body, re.IGNORECASE)
     sender_number = sender_number_match.group(1) if sender_number_match else None
     receiver_number = receiver_number_match.group(1) if receiver_number_match else None
 
-    # Sender / Receiver Names (words after from/to that are NOT numbers)
+    # sender and receiver names
     def extract_name(keyword):
         pattern = rf"{keyword}\s+([A-Za-z\s\.]+)"
         match = re.search(pattern, body)
         if match:
             name_candidate = match.group(1).strip()
-            # Remove any trailing number if captured
+            # removing the numbers after the name based on the xml data structure
             name_candidate = re.sub(r"\d+", "", name_candidate).strip()
             return name_candidate if name_candidate else None
         return None
