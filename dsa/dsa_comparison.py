@@ -29,12 +29,13 @@ if __name__ == "__main__":
 
     #find and id
     if data:
-        test_id = data[0]["id"]
+        test_id = data[-1]["id"]
+        iterations = 100000
         print(f"search for : {test_id}")
-        start = time.perf_counter()
-        result = linear_search(data, test_id)
-        end = time.perf_counter()
 
-        if result:
-            print(f"Found Transaction! Body: {result['body'][:50]}...")
-            print(f"Time taken: {end - start:.8f}s")
+        #testing the linear
+        start = time.perf_counter()
+        for _ in range(iterations):
+            linear_search(data, test_id)
+        end = time.perf_counter() - start
+        print(f"search : end time: {end:.8f}s")
